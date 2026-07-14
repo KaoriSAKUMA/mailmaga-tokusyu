@@ -46,6 +46,10 @@ $ARGUMENTS のURLをWebFetchで取得し、以下を収集:
 
 ### Step 3: コンテンツ記事の選定
 
+以下の2つの取得元から候補を集める。
+
+#### 取得元1: ちばキャリメディア（WordPress）
+
 以下の2URLをWebFetchで順番に取得:
 
 ```
@@ -53,10 +57,20 @@ https://chibacaricorp.com/mediawp2/wp-json/wp/v2/posts?per_page=100&page=1&_fiel
 https://chibacaricorp.com/mediawp2/wp-json/wp/v2/posts?per_page=100&page=2&_fields=title,link,excerpt,date
 ```
 
-テーマに最も関連性が高い記事を2件選定し、各記事URLをWebFetchで取得して以下を抽出:
+#### 取得元2: ちばキャリ転職ノウハウ
+
+`https://www.chibacari.com/career/useful/knowhow/` をWebFetchで取得し、配下の記事リンク（`/career/useful/{6桁ID}/` 形式）をすべて抽出する。
+
+- 記事に日付情報がないため、**URLの6桁IDが大きいほど新しい記事**とみなす（IDは連番で発行されている）
+- IDの降順に並べ、**上位15件程度**だけを候補プールとする（古い記事は候補にしない）
+- URLは `https://www.chibacari.com` を補完した絶対URLにする
+
+#### 選定とユーザー確認
+
+両方の取得元を合わせて、テーマに最も関連性が高い記事を2件選定する（取得元はどちらでも、混在してもよい）。各記事URLをWebFetchで取得して以下を抽出:
 - 記事タイトル（正確なもの）
 - 記事概要（冒頭2〜3文、HTMLタグを除いたテキスト、100〜150文字程度）
-- 記事URL（APIが返す `chibacaricorp.com/mediawp2/` のURLをそのまま使用）
+- 記事URL（取得元1は `chibacaricorp.com/mediawp2/`、取得元2は `www.chibacari.com/career/useful/` のURLをそのまま使用）
 
 **選定後、2件の記事タイトルとURLをユーザーに提示し、使用する1件を選んでもらう。**
 選定に悩んだ場合は3件に絞ってユーザーに提示し、使用する1件を選んでもらう。
