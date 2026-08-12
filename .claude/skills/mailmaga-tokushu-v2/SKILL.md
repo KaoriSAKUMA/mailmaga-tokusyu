@@ -41,10 +41,12 @@ $ARGUMENTS のURLをWebFetchで取得し、以下を収集:
 |---|---|
 | utm_source | email |
 | utm_medium | newsletter |
-| utm_campaign | {ID}b |
+| utm_campaign | ユーザー指定値をそのまま使用する |
 | 求人リンク | utm_content=job_{求人ID}（求人ごとに個別ID） |
-| コンテンツ記事 | utm_campaign={ID}b_contents / utm_content=contents |
+| コンテンツ記事 | utm_campaign={utm_campaign}_contents / utm_content=contents |
 
+※特集ページの「ID」（URLの `?id=XXXX`）と「utm_campaign」は別の値。utm_campaignはユーザーが依頼時に指定した値（例：`utm_campaign：385036`）をそのまま使用する。「{ID}b」のように特集ページIDから自動生成しない。
+※utm_campaignの指定がユーザーから渡されていない場合は、値を推測せずユーザーに確認する。
 ※IDはユーザー指定値をそのまま使用する（「tokushu_」などのプレフィックスは付けない）
 
 ---
@@ -240,6 +242,7 @@ Step 1で収集した求人情報から、「読者が思わず反応する具�
    - 各求人は `border-top: 1px solid #e5e5e5` で区切る
    - 番号（14px、#888888）
    - 職種名（18px、bold、#222222）
+   - 会社名（16px、#555555、職種名の直下に別行で表示。Step 1で収集した会社名をそのまま使う。省略しない）
    - 仕事内容の要約（16px、#444444）
    - 給与・勤務地・応募条件（16px、#555555）
    - 「求人詳細を見る →」テキストリンク（#0858a8、GA4付きURL）
