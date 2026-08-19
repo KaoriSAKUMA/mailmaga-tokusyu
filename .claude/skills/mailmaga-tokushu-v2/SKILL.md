@@ -44,9 +44,11 @@ $ARGUMENTS のURLをWebFetchで取得し、以下を収集:
 | utm_campaign | ユーザー指定値をそのまま使用する |
 | 求人リンク | utm_content=job_{求人ID}（求人ごとに個別ID） |
 | コンテンツ記事 | utm_campaign={utm_campaign}_contents / utm_content=contents |
+| おすすめ求人（レコ画像）ブロック | 対象外。詳細は「4. おすすめ求人（レコ画像）ブロック」を参照 |
 
 ※特集ページの「ID」（URLの `?id=XXXX`）と「utm_campaign」は別の値。utm_campaignはユーザーが依頼時に指定した値（例：`utm_campaign：385036`）をそのまま使用する。「{ID}b」のように特集ページIDから自動生成しない。
 ※utm_campaignの指定がユーザーから渡されていない場合は、値を推測せずユーザーに確認する。
+※おすすめ求人（レコ画像）ブロックのレコ画像8本（`___recogazo_img1___`〜`8___`）には、上記utm_campaign（特集ID・`_contents`等）を一切付与しない。Silveregg側の`cust=___user_id___`・`camp=newsletter`のみで計測するため、URLは固定のまま使用する。ブロック内の「AIおすすめ求人をもっと見る」リンクのみ、固定の`utm_campaign=mail_recommend`を使用する。
 ※IDはユーザー指定値をそのまま使用する（「tokushu_」などのプレフィックスは付けない）
 
 ---
@@ -252,14 +254,47 @@ Step 1で収集した求人情報から、「読者が思わず反応する具�
    <p style="margin:0;font-size:13px;color:#999999;line-height:1.7;">※ご覧いただくタイミングによっては、掲載終了や変更している場合もございます。詳細は求人情報をご覧ください。</p>
    ```
 
-4. **コンテンツパート**（白背景・装飾なし）
+4. **おすすめ求人（レコ画像）ブロック**（求人リストの直後・免責テキストの後、コンテンツパートの前に配置。応募CVが目的のため、離脱ポイントのコンテンツより手前に置く）
+   ```html
+   <tr>
+     <td style="border-top:1px solid #e5e5e5;padding:24px 32px;">
+       <p style="margin:0 0 16px;font-size:16px;color:#444444;line-height:1.7;">___name___ 様のご利用状況をもとに、おすすめの求人をご紹介します！</p>
+
+       <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=1&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img1___</a>
+
+       <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=2&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img2___</a>
+
+       <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=3&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img3___</a>
+
+       <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=4&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img4___</a>
+
+       <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=5&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img5___</a>
+
+       <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=6&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img6___</a>
+
+       <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=7&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img7___</a>
+
+       <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=8&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img8___</a>
+
+       <p style="margin:18px 0 0;text-align:center;">
+         <a href="https://www.chibacari.com/career/job/recommend/?utm_source=email&utm_medium=newsletter&utm_campaign=mail_recommend" style="color:#0858a8;font-size:16px;font-weight:bold;text-decoration:none;">AIおすすめ求人をもっと見る →</a>
+       </p>
+     </td>
+   </tr>
+   ```
+   - `___recogazo_img1___`〜`___recogazo_img8___`は8個の`<a>`タグをそのまま連続して並べる（改行・空行のみ、tableやfloatで組まない）。画像は自動的に横幅の半分程度になるため、自然に2列×4行で折り返される
+   - **レコ画像の8本のリンクには、特集メルマガ側のutm_campaign（ID・`_contents`等）を絶対に付与しない**。`cust=___user_id___`と`camp=newsletter`のみで完結しているURLをそのまま使う（Silveregg側で計測するため）
+   - 「AIおすすめ求人をもっと見る」は上記の固定URL（`utm_campaign=mail_recommend`）をそのまま使う。特集ごとの値に差し替えない
+   - CTAはボタン化しない。求人リスト・コンテンツパートの「〜を見る →」と同じテキストリンクの流儀に合わせ、フォントサイズと太字だけで強調する（塗りボタンは他のCTAと質感が変わり、広告っぽさが出るため避ける）
+
+5. **コンテンツパート**（白背景・装飾なし）
    - 導入文（テキスト調）
    - 記事タイトル（bold）
    - 記事概要テキスト
    - 「記事を読む →」テキストリンク（#0858a8、GA4付きURL）
    - 区切り線（`border-top: 1px solid #e5e5e5`）
 
-5. **結び**
+6. **結び**
    ```html
    <tr>
      <td style="border-top:1px solid #e5e5e5;padding:24px 32px;">
@@ -269,7 +304,7 @@ Step 1で収集した求人情報から、「読者が思わず反応する具�
    </tr>
    ```
 
-6. **フッター**（区切り線後）
+7. **フッター**（区切り線後）
    ```html
    <tr>
      <td class="sp-hdr" style="padding:24px 32px 0;border-top:1px solid #e5e5e5;">
