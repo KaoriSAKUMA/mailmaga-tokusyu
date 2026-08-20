@@ -85,6 +85,8 @@ https://chibacaricorp.com/mediawp2/wp-json/wp/v2/posts?per_page=100&page=2&_fiel
 選定に悩んだ場合は3件に絞ってユーザーに提示し、使用する1件を選んでもらう。
 「別の記事を使いたい」場合はURLを指定してもらい、記事情報を再取得する。
 
+※取得元1（WordPress）がアクセスエラー（robots.txt取得失敗等）で利用できない場合は、取得元2のみで候補を選定してよい。その旨をユーザーへの提示時に一言添える。
+
 ---
 
 ### Step 4: 件名案の提示
@@ -217,7 +219,7 @@ Step 1で収集した求人情報から、「読者が思わず反応する具�
 - 職種名: #222222
 - 本文: #444444
 - 給与・勤務地・条件: #555555
-- リンク: #0858a8
+- リンク・セクションラベル: #0858a8
 - 区切り線: #e5e5e5
 - 免責・フッターテキスト: #999999
 
@@ -225,8 +227,26 @@ Step 1で収集した求人情報から、「読者が思わず反応する具�
 - 宛名・リード文・本文（仕事内容の要約）・給与・勤務地・条件・結び: **16px**
 - 職種名: **18px**（bold）
 - 求人の番号: 14px
+- セクションラベル（後述）: 13px（bold）
 - 免責・フッターテキスト: 13px
 - 行間はline-height: 1.7前後を維持する
+
+### セクションラベル（必須・迷子防止）
+
+メールは上から下へ性質の異なるパート（挨拶→求人リスト→レコ画像→コンテンツ記事→結び→フッター）が連続するため、パートの境目に何の合図もないと、スクロール中に「今どこを読んでいるか」が分からなくなる。区切り線（1px）だけでは弱く、本文と同じ文字サイズ・色の導入文だけでも読者の目には地の文にしか見えない。
+
+そのため、**求人リスト・おすすめ求人（レコ画像）ブロック・コンテンツパートの先頭には、必ず小さな見出しラベルを入れる**：
+
+```html
+<p style="margin:0 0 10px;font-size:13px;font-weight:bold;color:#0858a8;letter-spacing:0.05em;">{ラベル文言}</p>
+```
+
+- 求人リストの先頭（1件目の求人番号の直前）：「ピックアップ求人」
+- おすすめ求人（レコ画像）ブロックの先頭（導入文の直前）：「おすすめ求人」
+- コンテンツパートの先頭（導入文の直前）：「関連記事」
+- 結び・フッターは、慣習的に「最後の挨拶」「配信元情報」と分かるため、ラベル不要
+- ラベルはボタンや背景色ボックスにしない。本文リンクと同じ色（#0858a8）を流用し、サイズと太字だけで差をつける（浮きすぎず、広告っぽくならないため）
+- ラベル文言は変更してよいが、体言止めの短い名詞（2〜6文字程度）に統一する
 
 ### 構成
 
@@ -242,7 +262,8 @@ Step 1で収集した求人情報から、「読者が思わず反応する具�
    - 「気になる求人を、リンクからご確認ください！」
 
 2. **求人リスト**（件数分、01〜順番に）
-   - 各求人は `border-top: 1px solid #e5e5e5` で区切る
+   - 各求人は `border-top: 1px solid #e5e5e5` で区切り、padding:24px 32px（求人1件ごとの余白はこれ以上広げない。広げるのは「パートの境目」であって、求人1件ずつの間ではない）
+   - **1件目の求人カードの先頭にだけ**、セクションラベル「ピックアップ求人」を入れる（2件目以降には入れない）
    - 番号（14px、#888888）
    - 職種名（18px、bold、#222222）
    - 会社名（16px、#555555、職種名の直下に別行で表示。Step 1で収集した会社名をそのまま使う。省略しない）
@@ -250,39 +271,59 @@ Step 1で収集した求人情報から、「読者が思わず反応する具�
    - 給与・勤務地・応募条件（16px、#555555）
    - 「求人詳細を見る →」テキストリンク（#0858a8、GA4付きURL）
 
-3. **免責テキスト**（最終求人の後、`border-bottom: 1px solid #e5e5e5`）
-   ```html
-   <p style="margin:0;font-size:13px;color:#999999;line-height:1.7;">※ご覧いただくタイミングによっては、掲載終了や変更している場合もございます。詳細は求人情報をご覧ください。</p>
-   ```
-
-4. **おすすめ求人（レコ画像）ブロック**（求人リストの直後・免責テキストの後、コンテンツパートの前に配置。応募CVが目的のため、離脱ポイントのコンテンツより手前に置く）
    ```html
    <tr>
-     <td style="border-top:1px solid #e5e5e5;padding:24px 32px;">
+     <td class="sp-card" style="border-top:1px solid #e5e5e5;padding:24px 32px;">
+       <p style="margin:0 0 10px;font-size:13px;font-weight:bold;color:#0858a8;letter-spacing:0.05em;">ピックアップ求人</p>
+       <p style="margin:0 0 8px;font-size:14px;color:#888888;">01</p>
+       <p style="margin:0 0 4px;font-size:18px;font-weight:bold;color:#222222;line-height:1.5;">{職種名}</p>
+       <p style="margin:0 0 12px;font-size:16px;color:#555555;line-height:1.6;">{会社名}</p>
+       <p style="margin:0 0 12px;font-size:16px;color:#444444;line-height:1.7;">{仕事内容の要約}</p>
+       <p style="margin:0 0 16px;font-size:16px;color:#555555;line-height:1.7;">{給与}｜{勤務地}</p>
+       <p style="margin:0;"><a href="{GA4付き求人URL}" style="color:#0858a8;font-size:16px;text-decoration:none;">求人詳細を見る →</a></p>
+     </td>
+   </tr>
+   ```
+   2件目以降は同じ構造で、先頭のラベル`<p>`だけを省く。
+
+3. **免責テキスト**（最終求人の後、`border-top`と`border-bottom`の両方で挟む。パートの境目として、周囲より広めの余白 padding:28px 32px を取る）
+   ```html
+   <tr>
+     <td class="sp-card" style="border-top:1px solid #e5e5e5;border-bottom:1px solid #e5e5e5;padding:28px 32px;">
+       <p style="margin:0;font-size:13px;color:#999999;line-height:1.7;">※ご覧いただくタイミングによっては、掲載終了や変更している場合もございます。詳細は求人情報をご覧ください。</p>
+     </td>
+   </tr>
+   ```
+
+4. **おすすめ求人（レコ画像）ブロック**（求人リストの直後・免責テキストの後、コンテンツパートの前に配置。応募CVが目的のため、離脱ポイントのコンテンツより手前に置く。パートの境目として padding:30px 32px を取る）
+   ```html
+   <tr>
+     <td style="border-top:1px solid #e5e5e5;padding:30px 32px;">
+       <p style="margin:0 0 10px;font-size:13px;font-weight:bold;color:#0858a8;letter-spacing:0.05em;">おすすめ求人</p>
        <p style="margin:0 0 16px;font-size:16px;color:#444444;line-height:1.7;">___name___ 様のご利用状況をもとに、おすすめの求人をご紹介します！</p>
 
        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
          <tr>
-           <td class="reco-col" width="50%" valign="top" style="padding:0 6px 12px 0;">
+           <td class="reco-col" width="50%" valign="top" style="padding:0 6px 16px 0;">
              <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=1&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img1___</a>
            </td>
-           <td class="reco-col" width="50%" valign="top" style="padding:0 0 12px 6px;">
+           <td class="reco-col" width="50%" valign="top" style="padding:0 0 16px 6px;">
              <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=2&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img2___</a>
            </td>
          </tr>
          <tr>
-           <td class="reco-col" width="50%" valign="top" style="padding:0 6px 12px 0;">
+           <td class="reco-col" width="50%" valign="top" style="padding:0 6px 16px 0;">
              <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=3&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img3___</a>
            </td>
-           <td class="reco-col" width="50%" valign="top" style="padding:0 0 12px 6px;">
+           <td class="reco-col" width="50%" valign="top" style="padding:0 0 16px 6px;">
              <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=4&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img4___</a>
            </td>
          </tr>
          <tr>
-           <td class="reco-col" width="50%" valign="top" style="padding:0 6px 12px 0;">
+           <td class="reco-col" width="50%" valign="top" style="padding:0 6px 16px 0;">
              <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=5&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img5___</a>
            </td>
-           <td class="reco-col" width="50%" valign="top" style="padding:0 0 12px 6px;">
+           <td class="reco-col" width="50%" valign="top" style="padding:0 0 16px 6px;">
              <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=6&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img6___</a>
            </td>
          </tr>
@@ -296,8 +337,8 @@ Step 1で収集した求人情報から、「読者が思わず反応する具�
          </tr>
        </table>
 
-       <p style="margin:18px 0 0;text-align:center;">
-         <a href="https://www.chibacari.com/career/job/recommend/?utm_source=email&utm_medium=newsletter&utm_campaign=mail_recommend" style="color:#0858a8;font-size:16px;font-weight:bold;text-decoration:none;">AIおすすめ求人をもっと見る →</a>
+       <p style="margin:28px 0 0;text-align:center;">
+         <a href="https://www.chibacari.com/career/job/recommend/?utm_source=email&utm_medium=newsletter&utm_campaign=mail_recommend" style="display:inline-block;background-color:#eef5fb;color:#0858a8;font-size:16px;font-weight:bold;text-decoration:none;padding:12px 26px;border-radius:6px;">AIおすすめ求人をもっと見る →</a>
        </p>
      </td>
    </tr>
@@ -306,29 +347,42 @@ Step 1で収集した求人情報から、「読者が思わず反応する具�
    - **PC幅では2列表示、スマホ幅（600px以下）では1列に積む**：`reco-col`クラスに対し、共通の`<style>`ブロック内の`@media screen and (max-width: 600px)`で`display:block !important; width:100% !important;`を適用し、モバイルで縦1列に折り返す（tableの`<td>`にwidth/paddingを直接指定するのは、メディアクエリ非対応クライアント＝PC側での2列表示をデフォルトの安全なレイアウトとして担保するため）
    - **レコ画像の8本のリンクには、特集メルマガ側のutm_campaign（ID・`_contents`等）を絶対に付与しない**。`cust=___user_id___`と`camp=newsletter`のみで完結しているURLをそのまま使う（Silveregg側で計測するため）
    - 「AIおすすめ求人をもっと見る」は上記の固定URL（`utm_campaign=mail_recommend`）をそのまま使う。特集ごとの値に差し替えない
-   - CTAはボタン化しない。求人リスト・コンテンツパートの「〜を見る →」と同じテキストリンクの流儀に合わせ、フォントサイズと太字だけで強調する（塗りボタンは他のCTAと質感が変わり、広告っぽさが出るため避ける）
+   - CTAはボタン化しない（塗りボタンは他のCTAと質感が変わり、広告っぽさが出るため避ける）。ただし単なるテキストリンクだと視認性が弱いという指摘を踏まえ、`display:inline-block`＋薄い背景色（#eef5fb）＋角丸（border-radius:6px）程度のソフトなハイライトは付ける。彩度の高い塗りボタンにはしない
 
-5. **コンテンツパート**（白背景・装飾なし）
+5. **コンテンツパート**（白背景・装飾なし。パートの境目として padding:30px 32px を取る）
+   - セクションラベル「関連記事」（先頭）
    - 導入文（テキスト調）
    - 記事タイトル（bold）
    - 記事概要テキスト
    - 「記事を読む →」テキストリンク（#0858a8、GA4付きURL）
    - 区切り線（`border-top: 1px solid #e5e5e5`）
 
-6. **結び**
    ```html
    <tr>
-     <td style="border-top:1px solid #e5e5e5;padding:24px 32px;">
+     <td class="sp-card" style="border-top:1px solid #e5e5e5;padding:30px 32px;">
+       <p style="margin:0 0 10px;font-size:13px;font-weight:bold;color:#0858a8;letter-spacing:0.05em;">関連記事</p>
+       <p style="margin:0 0 16px;font-size:16px;color:#444444;line-height:1.7;">最後に、今回の特集にあわせてご紹介したいコンテンツがあります。</p>
+       <p style="margin:0 0 8px;font-size:16px;font-weight:bold;color:#222222;line-height:1.6;">{記事タイトル}</p>
+       <p style="margin:0 0 16px;font-size:16px;color:#444444;line-height:1.7;">{記事概要}</p>
+       <p style="margin:0;"><a href="{GA4付き記事URL}" style="color:#0858a8;font-size:16px;text-decoration:none;">記事を読む →</a></p>
+     </td>
+   </tr>
+   ```
+
+6. **結び**（パートの境目として padding:30px 32px を取る）
+   ```html
+   <tr>
+     <td style="border-top:1px solid #e5e5e5;padding:30px 32px;">
        <p style="margin:0 0 12px;font-size:16px;color:#444444;">（雑談テキスト）</p>
        <p style="margin:0;font-size:16px;color:#444444;">ちばキャリ編集部</p>
      </td>
    </tr>
    ```
 
-7. **フッター**（区切り線後）
+7. **フッター**（区切り線後。パートの境目として padding:32px 32px 0 を取る）
    ```html
    <tr>
-     <td class="sp-hdr" style="padding:24px 32px 0;border-top:1px solid #e5e5e5;">
+     <td class="sp-hdr" style="padding:32px 32px 0;border-top:1px solid #e5e5e5;">
        <p style="margin:18px 0 8px;font-size:13px;color:#888888;line-height:1.8;">
          メルマガの停止は、マイページ「登録情報」より<a href="https://www.chibacari.com/career/user/login/" style="color:#888888;text-decoration:underline;">お手続き</a>ください。配信停止までは約1日お時間を頂戴します。<br>
          ご質問は<a href="https://tayori.com/q/chibacari-faq/" style="color:#888888;text-decoration:underline;">こちら</a>からご確認をお願いいたします。
