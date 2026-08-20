@@ -204,6 +204,7 @@ Step 1で収集した求人情報から、「読者が思わず反応する具�
   @media screen and (max-width: 600px) {
     .sp-hdr  { padding-left: 24px !important; padding-right: 24px !important; }
     .sp-card { padding-left: 14px !important; padding-right: 14px !important; }
+    .reco-col { display: block !important; width: 100% !important; padding-left: 0 !important; padding-right: 0 !important; }
   }
   @media screen and (min-width: 601px) {
     .sp-outer { padding-left: 32px !important; padding-right: 32px !important; }
@@ -260,21 +261,40 @@ Step 1で収集した求人情報から、「読者が思わず反応する具�
      <td style="border-top:1px solid #e5e5e5;padding:24px 32px;">
        <p style="margin:0 0 16px;font-size:16px;color:#444444;line-height:1.7;">___name___ 様のご利用状況をもとに、おすすめの求人をご紹介します！</p>
 
-       <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=1&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img1___</a>
-
-       <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=2&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img2___</a>
-
-       <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=3&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img3___</a>
-
-       <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=4&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img4___</a>
-
-       <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=5&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img5___</a>
-
-       <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=6&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img6___</a>
-
-       <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=7&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img7___</a>
-
-       <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=8&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img8___</a>
+       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+         <tr>
+           <td class="reco-col" width="50%" valign="top" style="padding:0 6px 12px 0;">
+             <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=1&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img1___</a>
+           </td>
+           <td class="reco-col" width="50%" valign="top" style="padding:0 0 12px 6px;">
+             <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=2&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img2___</a>
+           </td>
+         </tr>
+         <tr>
+           <td class="reco-col" width="50%" valign="top" style="padding:0 6px 12px 0;">
+             <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=3&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img3___</a>
+           </td>
+           <td class="reco-col" width="50%" valign="top" style="padding:0 0 12px 6px;">
+             <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=4&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img4___</a>
+           </td>
+         </tr>
+         <tr>
+           <td class="reco-col" width="50%" valign="top" style="padding:0 6px 12px 0;">
+             <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=5&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img5___</a>
+           </td>
+           <td class="reco-col" width="50%" valign="top" style="padding:0 0 12px 6px;">
+             <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=6&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img6___</a>
+           </td>
+         </tr>
+         <tr>
+           <td class="reco-col" width="50%" valign="top" style="padding:0 6px 0 0;">
+             <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=7&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img7___</a>
+           </td>
+           <td class="reco-col" width="50%" valign="top" style="padding:0 0 0 6px;">
+             <a href="https://chibacari-recogazo.silveregg.net/click?merch=chibacari&camp=newsletter&cust=___user_id___&spec=rcgzbbbo01&pos=8&default_url=https://www.chibacari.com/career/job/recommend/">___recogazo_img8___</a>
+           </td>
+         </tr>
+       </table>
 
        <p style="margin:18px 0 0;text-align:center;">
          <a href="https://www.chibacari.com/career/job/recommend/?utm_source=email&utm_medium=newsletter&utm_campaign=mail_recommend" style="color:#0858a8;font-size:16px;font-weight:bold;text-decoration:none;">AIおすすめ求人をもっと見る →</a>
@@ -282,7 +302,8 @@ Step 1で収集した求人情報から、「読者が思わず反応する具�
      </td>
    </tr>
    ```
-   - `___recogazo_img1___`〜`___recogazo_img8___`は8個の`<a>`タグをそのまま連続して並べる（改行・空行のみ、tableやfloatで組まない）。画像は自動的に横幅の半分程度になるため、自然に2列×4行で折り返される
+   - `___recogazo_img1___`〜`___recogazo_img8___`は、table構成で2列×4行に組む（`reco-col`クラスを付けた`<td width="50%">`を左右に並べる）
+   - **PC幅では2列表示、スマホ幅（600px以下）では1列に積む**：`reco-col`クラスに対し、共通の`<style>`ブロック内の`@media screen and (max-width: 600px)`で`display:block !important; width:100% !important;`を適用し、モバイルで縦1列に折り返す（tableの`<td>`にwidth/paddingを直接指定するのは、メディアクエリ非対応クライアント＝PC側での2列表示をデフォルトの安全なレイアウトとして担保するため）
    - **レコ画像の8本のリンクには、特集メルマガ側のutm_campaign（ID・`_contents`等）を絶対に付与しない**。`cust=___user_id___`と`camp=newsletter`のみで完結しているURLをそのまま使う（Silveregg側で計測するため）
    - 「AIおすすめ求人をもっと見る」は上記の固定URL（`utm_campaign=mail_recommend`）をそのまま使う。特集ごとの値に差し替えない
    - CTAはボタン化しない。求人リスト・コンテンツパートの「〜を見る →」と同じテキストリンクの流儀に合わせ、フォントサイズと太字だけで強調する（塗りボタンは他のCTAと質感が変わり、広告っぽさが出るため避ける）
