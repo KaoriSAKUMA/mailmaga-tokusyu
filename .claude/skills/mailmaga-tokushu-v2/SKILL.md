@@ -363,7 +363,7 @@ C（語りかけ）　：（案C）
    <tr>
      <td style="border-top:1px solid #e5e5e5;padding:30px 32px;">
        <p style="margin:0 0 10px;font-size:13px;font-weight:bold;color:#0858a8;letter-spacing:0.05em;">おすすめ求人</p>
-       <p style="margin:0 0 16px;font-size:16px;color:#444444;line-height:1.7;">会員様のご利用状況をもとに、おすすめの求人をご紹介します！</p>
+       <p style="margin:0 0 16px;font-size:16px;color:#444444;line-height:1.7;">あなたのご利用状況をもとに、おすすめの求人をご紹介します！</p>
 
        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
          <tr>
